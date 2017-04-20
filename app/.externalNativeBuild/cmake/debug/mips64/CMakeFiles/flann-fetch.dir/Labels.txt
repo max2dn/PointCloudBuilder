@@ -1,0 +1,13 @@
+# Target labels
+ flann-fetch
+# Source files and their labels
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeFiles/flann-fetch
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeFiles/flann-fetch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeFiles/flann-fetch-complete.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-install.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-mkdir.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-download.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-update.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-patch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-configure.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/flann-fetch/flann-fetch-build.rule

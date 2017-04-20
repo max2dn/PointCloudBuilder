@@ -1,0 +1,19 @@
+
+{
+	"buildFiles" : 
+	[
+		"/Users/maxenchung/Desktop/Senior_Design/superbuild/pcl-superbuild/CMakeLists.txt"
+	],
+	"cleanCommands" : 
+	[
+		"/Users/maxenchung/Library/Android/sdk/cmake/3.6.3155560/bin/cmake --build /Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64 --target clean"
+	],
+	"toolchains" : 
+	{
+		"13039316805505167447" : 
+		{
+			"cCompilerExecutable" : "/Users/maxenchung/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/Users/maxenchung/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+		}
+	}
+}

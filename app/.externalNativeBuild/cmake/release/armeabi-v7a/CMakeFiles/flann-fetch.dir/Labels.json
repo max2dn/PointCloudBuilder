@@ -1,0 +1,51 @@
+
+{
+	"sources" : 
+	[
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/flann-fetch"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/flann-fetch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeFiles/flann-fetch-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-install.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-download.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-update.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a/CMakeExternals/Stamp/flann-fetch/flann-fetch-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : [ "flann-fetch" ],
+		"name" : "flann-fetch"
+	}
+}

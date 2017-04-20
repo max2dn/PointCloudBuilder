@@ -1,0 +1,13 @@
+# Target labels
+ pcl-fetch
+# Source files and their labels
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeFiles/pcl-fetch
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeFiles/pcl-fetch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeFiles/pcl-fetch-complete.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-install.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-mkdir.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-download.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-update.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-patch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-configure.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-build.rule

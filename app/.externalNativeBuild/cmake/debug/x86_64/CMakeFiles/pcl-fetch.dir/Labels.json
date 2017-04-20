@@ -1,0 +1,51 @@
+
+{
+	"sources" : 
+	[
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/pcl-fetch"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/pcl-fetch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/pcl-fetch-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-install.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-download.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-update.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/x86_64/CMakeExternals/Stamp/pcl-fetch/pcl-fetch-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : [ "pcl-fetch" ],
+		"name" : "pcl-fetch"
+	}
+}

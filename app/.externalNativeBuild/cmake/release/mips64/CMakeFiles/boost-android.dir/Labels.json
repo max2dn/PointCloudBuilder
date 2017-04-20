@@ -1,0 +1,87 @@
+
+{
+	"sources" : 
+	[
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeFiles/boost-android"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeFiles/boost-android.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeFiles/boost-android-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-install.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-download.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-update.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-build.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-android/boost-android-forcebuild.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeFiles/boost-fetch-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-install.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-download.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-update.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips64/CMakeExternals/Stamp/boost-fetch/boost-fetch-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : [ "boost-android" ],
+		"name" : "boost-android"
+	}
+}

@@ -1,0 +1,51 @@
+
+{
+	"sources" : 
+	[
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeFiles/eigen"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeFiles/eigen.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeFiles/eigen-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-install.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-download.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-update.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/mips/CMakeExternals/Stamp/eigen/eigen-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : [ "eigen" ],
+		"name" : "eigen"
+	}
+}

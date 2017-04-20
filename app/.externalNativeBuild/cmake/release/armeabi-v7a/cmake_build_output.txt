@@ -1,0 +1,5 @@
+-- Found PythonInterp: /usr/bin/python (found version "2.7.10") 
+-- Found Git: /usr/bin/git (found version "2.10.1 (Apple Git-78)") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/armeabi-v7a

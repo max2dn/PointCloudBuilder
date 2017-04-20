@@ -1,0 +1,13 @@
+# Target labels
+ boost-fetch
+# Source files and their labels
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/boost-fetch
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/boost-fetch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/boost-fetch-complete.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-install.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-mkdir.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-download.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-update.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-patch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-configure.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeExternals/Stamp/boost-fetch/boost-fetch-build.rule

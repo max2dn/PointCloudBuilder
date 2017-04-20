@@ -1,0 +1,51 @@
+
+{
+	"sources" : 
+	[
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeFiles/boost-fetch"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeFiles/boost-fetch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeFiles/boost-fetch-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-install.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-download.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-update.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/debug/mips/CMakeExternals/Stamp/boost-fetch/boost-fetch-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : [ "boost-fetch" ],
+		"name" : "boost-fetch"
+	}
+}

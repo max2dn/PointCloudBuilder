@@ -1,0 +1,22 @@
+# Target labels
+ flann-android
+# Source files and their labels
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeFiles/flann-android
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeFiles/flann-android.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeFiles/flann-android-complete.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-install.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-mkdir.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-download.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-update.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-patch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-configure.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-build.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-android/flann-android-forcebuild.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeFiles/flann-fetch-complete.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-install.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-mkdir.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-download.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-update.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-patch.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-configure.rule
+/Users/maxenchung/StudioProjects/tango-examples-java/java_point_cloud_example/app/.externalNativeBuild/cmake/release/x86_64/CMakeExternals/Stamp/flann-fetch/flann-fetch-build.rule
