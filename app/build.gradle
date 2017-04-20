@@ -21,11 +21,6 @@ android {
     lintOptions {
         abortOnError false
     }
-    externalNativeBuild {
-        cmake {
-            path '../../../../Desktop/Senior_Design/superbuild/pcl-superbuild/CMakeLists.txt'
-        }
-    }
 }
 
 def external_lib_prefix = null
