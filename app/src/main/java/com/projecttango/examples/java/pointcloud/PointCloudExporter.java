@@ -32,14 +32,22 @@ public class PointCloudExporter {
     private static final String HEIGHT = "HEIGHT 1\n";
     private static final String DATA = "DATA ascii\n";
     private final Context context;
+    private String mfilename;
+    private Boolean mSuccess;
 
     public PointCloudExporter(Context context) {
         this.context = context;
     }
 
 
-    public void export(TangoPointCloudData data) {
-        new ExportAsyncTask().execute(data);
+    public boolean export(TangoPointCloudData data, String fname) {
+        mfilename = fname;
+        try {
+            new ExportAsyncTask().execute(data).get();
+        } catch(Exception e){
+            Log.e("Export Error","Export Async Task Failed");
+        }
+        return mSuccess;
     }
 
     private class ExportAsyncTask extends AsyncTask<TangoPointCloudData, Integer, Void> {
@@ -49,10 +57,10 @@ public class PointCloudExporter {
             if (params.length == 0) {
                 return null;
             }
-            Format formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.US);
+            //Format formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.US);
             TangoPointCloudData data = params[0];
 
-            String fileName = "pointcloud-" + formatter.format(new Date()) + ".pcd";
+            String fileName = mfilename + ".pcd";
             File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pointclouds");
             if (!f.exists()) {
                 f.mkdirs();
@@ -66,7 +74,7 @@ public class PointCloudExporter {
 
                 // Initialize and write header fields
                 String WIDTH = "WIDTH " + String.valueOf(size) + "\n"; //In PCD .7, WIDTH is the number of points for unorganized data
-                String POINTS = "POINTS " + WIDTH; //As of PCD .7, POINTS is redundant but still included
+                String POINTS = "POINTS " + String.valueOf(size) + "\n"; //As of PCD .7, POINTS is redundant but still included
                 String VIEWPOINT = "VIEWPOINT 0 0 0 1 0 0 0\n"; //To be changed
                 String HEADER = VERSION + FIELDS + SIZE + TYPE + COUNT + WIDTH + HEIGHT + VIEWPOINT + POINTS + DATA;
                 os.write(HEADER.getBytes());
@@ -80,8 +88,10 @@ public class PointCloudExporter {
                     os.write(row.getBytes());
                 }
                 os.close();
+                mSuccess = true;
             } catch (IOException e) {
                 Log.e("PointCloudExporterIO","IO Exception");
+                mSuccess = false;
             }
             return null;
         }

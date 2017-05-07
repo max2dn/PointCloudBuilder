@@ -30,6 +30,7 @@ import com.google.atap.tangoservice.TangoPoseData;
 import com.google.atap.tangoservice.TangoXyzIjData;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -39,6 +40,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -46,6 +48,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import android.widget.SeekBar;
@@ -96,75 +100,47 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
     SurfaceHolder holder,holderTransparent;
     SurfaceView transparentView;
     float  deviceHeight,deviceWidth;
-    private float RectLeft, RectTop,RectRight,RectBottom ;
 
     private SeekBar mHorizontalSeekbar;
+    private SeekBar mVerticalSeekbar;
+    private float horizontalProgress;
+    private float verticalProgress;
     private Button mExportButton;
+    private FloatingActionButton fab;
+    private String filename;
+    private Intent callingMenu;
+
 
     private int mDisplayRotation = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //remove title bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //remove notification bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_point_cloud);
+        callingMenu = getIntent();
+        filename = callingMenu.getStringExtra("filename");
 
         mPointCountTextView = (TextView) findViewById(R.id.point_count_textview);
         mAverageZTextView = (TextView) findViewById(R.id.average_z_textview);
         mSurfaceView = (RajawaliSurfaceView) findViewById(R.id.gl_surface_view);
 
         mHorizontalSeekbar = (SeekBar) findViewById(R.id.horizontal_seekbar);
+        horizontalProgress = 50;
+        mVerticalSeekbar = (SeekBar) findViewById(R.id.vertical_seekbar);
+        verticalProgress = 50;
         mExportButton = (Button) findViewById(R.id.export_button);
         tangoCameraPreview = (TangoCameraPreview) findViewById(R.id.tango_camera_preview);
+        //fab = (FloatingActionButton) findViewById(R.id.fab);
+
 
         mPointCloudManager = new TangoPointCloudManager();
         mTangoUx = setupTangoUxAndLayout();
         mRenderer = new PointCloudRajawaliRenderer(this);
         setupRenderer();
-
-        DisplayManager displayManager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
-        if (displayManager != null) {
-            displayManager.registerDisplayListener(new DisplayManager.DisplayListener() {
-                @Override
-                public void onDisplayAdded(int displayId) {
-                }
-
-                @Override
-                public void onDisplayChanged(int displayId) {
-                    synchronized (this) {
-                        setDisplayRotation();
-                    }
-                }
-
-                @Override
-                public void onDisplayRemoved(int displayId) {
-                }
-            }, null);
-        }
-
-        mHorizontalSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Draw(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        mExportButton.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View v){
-                mIsConnected=false;
-                TangoPointCloudData data = mPointCloudManager.getLatestPointCloud();
-                mRenderer.exportPointCloud(getApplicationContext(),data);
-            }
-        });
-
+        setupListeners();
         transparentView=(SurfaceView) findViewById(R.id.TransparentView);
         holder = tangoCameraPreview.getHolder();
         holder.addCallback(this);
@@ -174,45 +150,7 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
         transparentView.setZOrderMediaOverlay(true);
         deviceWidth=getScreenWidth();
         deviceHeight=getScreenHeight();
-
     }
-
-    public static int getScreenWidth() {
-        return Resources.getSystem().getDisplayMetrics().widthPixels;
-    }
-
-    public static int getScreenHeight() {
-        return Resources.getSystem().getDisplayMetrics().heightPixels;
-    }
-
-
-    /*Draw a rectangle on the screen
-    * using deviceWidth/2 and deviceHeight/2-actionbarHeight as the center
-    */
-    private void Draw(float width)
-    {
-        Canvas canvas = holderTransparent.lockCanvas(null);
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //Reset the canvas
-
-        //Create paint color for the rectangle
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.GREEN);
-        paint.setStrokeWidth(3);
-
-        //Set the bounds of the rectangle
-        RectLeft = deviceWidth/2-deviceWidth*(width/200);
-        RectTop = deviceHeight/2-deviceHeight/4-getActionBar().getHeight();
-        RectRight = deviceWidth/2+deviceWidth*(width/200);
-        RectBottom = deviceHeight/2+deviceHeight/4-getActionBar().getHeight();
-
-        //Draw the rectangle
-        Rect rec=new Rect((int) RectLeft,(int)RectTop,(int)RectRight,(int)RectBottom);
-        canvas.drawRect(rec,paint);
-        holderTransparent.unlockCanvasAndPost(canvas);
-    }
-
-
 
     @Override
     protected void onResume() {
@@ -229,26 +167,26 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
             // when there is no UI thread changes involved.
             @Override
             public void run() {
-            // Synchronize against disconnecting while the service is being used in the
-            // OpenGL thread or in the UI thread.
-            synchronized (PointCloudActivity.this) {
-                TangoSupport.initialize();
-                mConfig = setupTangoConfig(mTango);
+                // Synchronize against disconnecting while the service is being used in the
+                // OpenGL thread or in the UI thread.
+                synchronized (PointCloudActivity.this) {
+                    TangoSupport.initialize();
+                    mConfig = setupTangoConfig(mTango);
 
-                try {
-                    setTangoListeners();
-                } catch (TangoErrorException e) {
-                    Log.e(TAG, getString(R.string.exception_tango_error), e);
+                    try {
+                        setTangoListeners();
+                    } catch (TangoErrorException e) {
+                        Log.e(TAG, getString(R.string.exception_tango_error), e);
+                    }
+                    try {
+                        mTango.connect(mConfig);
+                        mIsConnected = true;
+                    } catch (TangoOutOfDateException e) {
+                        Log.e(TAG, getString(R.string.exception_out_of_date), e);
+                    } catch (TangoErrorException e) {
+                        Log.e(TAG, getString(R.string.exception_tango_error), e);
+                    }
                 }
-                try {
-                    mTango.connect(mConfig);
-                    mIsConnected = true;
-                } catch (TangoOutOfDateException e) {
-                    Log.e(TAG, getString(R.string.exception_out_of_date), e);
-                } catch (TangoErrorException e) {
-                    Log.e(TAG, getString(R.string.exception_tango_error), e);
-                }
-            }
             }
         });
     }
@@ -270,7 +208,135 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
         }
     }
 
-    /**
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    /*
+     * Setup the listeners for the two seekbars, displaymanager(for crop tool) and the export button
+     */
+    private void setupListeners(){
+        mHorizontalSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                horizontalProgress=progress;
+                Draw();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        mVerticalSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                verticalProgress=progress;
+                Draw();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        DisplayManager displayManager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
+        if (displayManager != null) {
+            displayManager.registerDisplayListener(new DisplayManager.DisplayListener() {
+                @Override
+                public void onDisplayAdded(int displayId) {
+                }
+
+                @Override
+                public void onDisplayChanged(int displayId) {
+                    synchronized (this) {
+                        setDisplayRotation();
+                    }
+                }
+
+                @Override
+                public void onDisplayRemoved(int displayId) {
+                }
+            }, null);
+        }
+
+        mExportButton.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                mIsConnected = false;
+                mTangoUx.stop();
+                mTango.disconnect();
+                tangoCameraPreview.disconnectFromTangoCamera();
+                Intent d = new Intent();
+                TangoPointCloudData data = mPointCloudManager.getLatestPointCloud();
+                if(mRenderer.exportPointCloud(getApplicationContext(),data,filename)) {
+                    if (getParent() == null) {
+                        setResult(Activity.RESULT_OK, d);
+                    } else {
+                        getParent().setResult(Activity.RESULT_OK, d);
+                    }
+                } else {
+                    if (getParent() == null) {
+                        setResult(Activity.RESULT_CANCELED, d);
+                    } else {
+                        getParent().setResult(Activity.RESULT_CANCELED, d);
+                    }
+                }
+                finish();
+            }
+        });
+        /*
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
+    }
+
+
+    /*
+     * Draw a rectangle on the screen
+     * using deviceWidth/2 and deviceHeight/2 as the center
+     */
+    private void Draw()
+    {
+        float RectLeft, RectTop,RectRight,RectBottom ;
+        Canvas canvas = holderTransparent.lockCanvas(null);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //Reset the canvas
+
+        //Create paint color for the rectangle
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.GREEN);
+        paint.setStrokeWidth(3);
+
+        //Set the bounds of the rectangle
+        RectLeft = deviceWidth/2-deviceWidth*(horizontalProgress/200);
+        RectTop = deviceHeight/2-deviceHeight*(verticalProgress/200);
+        RectRight = deviceWidth/2+deviceWidth*(horizontalProgress/200);
+        RectBottom = deviceHeight/2+deviceHeight*(verticalProgress/200);
+
+        //Draw the rectangle
+        Rect rec=new Rect((int) RectLeft,(int)RectTop,(int)RectRight,(int)RectBottom);
+        canvas.drawRect(rec,paint);
+        holderTransparent.unlockCanvasAndPost(canvas);
+    }
+
+    /*
      * Sets up the tango configuration object. Make sure mTango object is initialized before
      * making this call.
      */
@@ -499,7 +565,7 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
     public void surfaceCreated(SurfaceHolder holder) {
         try {
             synchronized (holder)
-            {Draw(50);}   //call a draw method
+            {Draw();}   //call a draw method
         }
         catch (Exception e) {
             Log.i("Exception", e.toString());
@@ -515,7 +581,7 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 
-    /**
+    /*
      * Query the display's rotation.
      */
     private void setDisplayRotation() {

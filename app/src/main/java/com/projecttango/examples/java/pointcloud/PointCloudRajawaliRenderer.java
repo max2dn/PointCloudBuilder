@@ -107,10 +107,10 @@ public class PointCloudRajawaliRenderer extends RajawaliRenderer {
         mTouchViewHandler.onTouchEvent(motionEvent);
     }
 
-    public void exportPointCloud(Context context, TangoPointCloudData data)
+    public boolean exportPointCloud(Context context, TangoPointCloudData data, String filename)
     {
         PointCloudExporter exporter = new PointCloudExporter(context);
-        exporter.export(data);
+        return exporter.export(data,filename);
     }
 
     public void setFirstPersonView() {

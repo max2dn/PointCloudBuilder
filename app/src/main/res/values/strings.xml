@@ -15,8 +15,8 @@
    limitations under the License.
 -->
 <resources>
-    <string name="app_name">Java Point Cloud</string>
-    <string name="app_name_long">Java Point Cloud Example</string>
+    <string name="app_name">Point Cloud Builder</string>
+    <string name="app_name_long">Point Cloud Builder</string>
     <string name="first_person">First</string>
     <string name="third_person">Third</string>
     <string name="top_down">Top</string>
