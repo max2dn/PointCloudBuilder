@@ -282,7 +282,7 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
                 tangoCameraPreview.disconnectFromTangoCamera();
                 Intent d = new Intent();
                 TangoPointCloudData data = mPointCloudManager.getLatestPointCloud();
-                if(mRenderer.exportPointCloud(getApplicationContext(),data,filename)) {
+                if(mRenderer.exportPointCloud(PointCloudActivity.this,data,filename)) {
                     if (getParent() == null) {
                         setResult(Activity.RESULT_OK, d);
                     } else {
@@ -298,13 +298,6 @@ public class PointCloudActivity extends Activity implements SurfaceHolder.Callba
                 finish();
             }
         });
-        /*
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/
     }
 
 

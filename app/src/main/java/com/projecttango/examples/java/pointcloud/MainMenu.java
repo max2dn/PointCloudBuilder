@@ -2,13 +2,19 @@ package com.projecttango.examples.java.pointcloud;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -27,21 +33,19 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import java.net.HttpURLConnection;
 
 /**
@@ -55,6 +59,7 @@ public class MainMenu extends AppCompatActivity {
     ListView mainListview;
     String frontFileName = "";
     String backFileName = "";
+    String exportFileName= "";
     private static final int FRONT = 0;
     private static final int BACK = 1;
     Toolbar mToolbar;
@@ -72,6 +77,52 @@ public class MainMenu extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, MENUITEMS);
         mainListview.setAdapter(adapter);
+        mainListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final String item = (String) mainListview.getItemAtPosition(position);
+                AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
+                b.setTitle("Input Filename");
+                final EditText input = new EditText(MainMenu.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                b.setView(input);
+
+                // Set up the buttons
+                b.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String filename = input.getText().toString();
+                        File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pointclouds");
+                        File file = new File(path,filename+".pcd");
+                        if(!validFileName(filename)||!file.exists()) {
+                            dialog.cancel();
+                            Toast.makeText(MainMenu.this,"File Does Not Exist",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(item.equals("Front")) {
+                            frontFileName = input.getText().toString();
+                            ((TextView) mainListview.getChildAt(FRONT)).setTextColor(Color.GREEN);
+                        } else if (item.equals("Back")){
+                            backFileName = input.getText().toString();
+                            ((TextView) mainListview.getChildAt(FRONT)).setTextColor(Color.GREEN);
+                        } else {
+                            Log.e("MainMenuListViewLClick", "Invalid item selected");
+                            return;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                b.show();
+                return true;
+            }
+        });
+
         mainListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +164,6 @@ public class MainMenu extends AppCompatActivity {
                 b.show();
             }
         });
-
     }
 
 
@@ -140,9 +190,39 @@ public class MainMenu extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        for(int i = 0; i<mainListview.getChildCount(); i++){
+            if(((TextView) mainListview.getChildAt(i)).getCurrentTextColor() != Color.GREEN){
+                Toast.makeText(this,"Input All Clouds",Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
         switch(item.getItemId()) {
             case R.id.export_menu_item:
-                new SendtoServerTask().execute();
+                if(!isOnline()){
+                    Toast.makeText(MainMenu.this,"No Internet Connection",Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
+                b.setTitle("Input Desired Filename");
+                final EditText i = new EditText(MainMenu.this);
+                i.setInputType(InputType.TYPE_CLASS_TEXT);
+                b.setView(i);
+                b.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!validFileName(i.getText().toString()))
+                            return;
+                        exportFileName = i.getText().toString();
+                        new SendtoServerTask().execute();
+                    }
+                });
+                b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                b.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -159,6 +239,19 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private class SendtoServerTask extends AsyncTask<URL,Integer,Boolean> {
+        ProgressDialog d;
+        @Override
+        protected void onPreExecute() {
+            d = new ProgressDialog(MainMenu.this);
+            d.setMessage("Sending Data");
+            d.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            d.setProgressNumberFormat(null);
+            d.setIndeterminate(false);
+            d.setProgress(0);
+            d.setMax(100);
+            d.show();
+        }
+
         @Override
         protected Boolean doInBackground(URL... urls) {
             HttpURLConnection urlConnection = null;
@@ -174,30 +267,41 @@ public class MainMenu extends AppCompatActivity {
                 URL url = new URL("http","54.183.187.18",8080,"json");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 Log.v("makeRequest", "Made connection to " + url.toString());
+                publishProgress(10);
                 urlConnection.setDoOutput(true);
                 urlConnection.setDoInput(true);
                 urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                 urlConnection.setRequestProperty("Accept", "application/json");
                 urlConnection.setRequestMethod("POST");
-                Log.v("makeRequest", "Set Request Method POST");
+                publishProgress(15);
                 OutputStreamWriter os = new OutputStreamWriter(urlConnection.getOutputStream());
-                Log.v("makeRequest", "Got Output Stream");
                 os.write(jsonObject.toString());
-                Log.v("makeRequest", "Wrote Output Stream");
                 os.close();
-                Log.v("makeRequest", "Finished Sending Data");
+                publishProgress(25);
                 StringBuilder sb = new StringBuilder();
                 int HttpResult = urlConnection.getResponseCode();
-                Log.v("makeRequest", "Received Response Code " + HttpResult);
+                publishProgress(75);
                 if (HttpResult == HttpURLConnection.HTTP_OK) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
                     String line = null;
+                    int count = 0;
                     while ((line = br.readLine()) != null) {
+                        count++;
+                        if(count%1000==0){
+                            publishProgress(75+25*count/60000);
+                        }
                         sb.append(line);
                         sb.append("\n");
                     }
                     br.close();
-                    Log.d("vtk","" + sb.toString());
+                    File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/objects");
+                    if (!f.exists()) {
+                        f.mkdirs();
+                    }
+                    final File file = new File(f,exportFileName+".obj");
+                    OutputStream outputfilestream = new FileOutputStream(file);
+                    outputfilestream.write(sb.toString().getBytes());
+                    outputfilestream.close();
                 } else {
                     System.out.println(urlConnection.getResponseMessage());
                 }
@@ -207,6 +311,49 @@ public class MainMenu extends AppCompatActivity {
                 e.printStackTrace();
             }
             return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            Toast.makeText(MainMenu.this,"Saved",Toast.LENGTH_LONG).show();
+            d.dismiss();
+            AlertDialog.Builder a = new AlertDialog.Builder(MainMenu.this);
+            a.setMessage("Open File?");
+            a.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    openFile();
+                }
+            });
+            a.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            a.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            d.setProgress(values[0]);
+            switch(values[0]){
+                case 0:
+                    d.setMessage("Making Connection");
+                    break;
+                case 15:
+                    d.setMessage("Posting Data");
+                    break;
+                case 25:
+                    d.setMessage("Waiting for Server to Parse Data");
+                    break;
+                case 75:
+                    d.setMessage("Writing File");
+                    break;
+            }
+            if(values[0]==75){
+                d.setMessage("Receiving File");
+            }
         }
     }
 
@@ -240,4 +387,24 @@ public class MainMenu extends AppCompatActivity {
         return jsonObject;
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
+    }
+
+    public void openFile() {
+        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/objects");
+        File file = new File(f, exportFileName+".obj");
+
+        // Get URI and MIME type of file
+        Uri uri = FileProvider.getUriForFile(this,"com.mydomain.fileprovider", file);
+
+        // Open file with user selected app
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
+    }
 }

@@ -1,5 +1,7 @@
 package com.projecttango.examples.java.pointcloud;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -33,27 +35,28 @@ public class PointCloudExporter {
     private static final String DATA = "DATA ascii\n";
     private final Context context;
     private String mfilename;
-    private Boolean mSuccess;
 
     public PointCloudExporter(Context context) {
         this.context = context;
     }
 
 
-    public boolean export(TangoPointCloudData data, String fname) {
+    public Boolean export(TangoPointCloudData data, String fname) {
         mfilename = fname;
         try {
-            new ExportAsyncTask().execute(data).get();
+            Boolean b =  new ExportAsyncTask().execute(data).get();
+            return b;
         } catch(Exception e){
             Log.e("Export Error","Export Async Task Failed");
+            e.printStackTrace();
         }
-        return mSuccess;
+        return false;
     }
 
-    private class ExportAsyncTask extends AsyncTask<TangoPointCloudData, Integer, Void> {
+    private class ExportAsyncTask extends AsyncTask<TangoPointCloudData, Integer, Boolean> {
 
         @Override
-        protected Void doInBackground(TangoPointCloudData... params) {
+        protected Boolean doInBackground(TangoPointCloudData... params) {
             if (params.length == 0) {
                 return null;
             }
@@ -88,26 +91,11 @@ public class PointCloudExporter {
                     os.write(row.getBytes());
                 }
                 os.close();
-                mSuccess = true;
+                return true;
             } catch (IOException e) {
                 Log.e("PointCloudExporterIO","IO Exception");
-                mSuccess = false;
+                return false;
             }
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Toast.makeText(context, "Finished", Toast.LENGTH_LONG).show();
-    }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-
         }
     }
 }
