@@ -63,6 +63,7 @@ public class MainMenu extends AppCompatActivity {
     private static final int FRONT = 0;
     private static final int BACK = 1;
     Toolbar mToolbar;
+    float standardDeviation;
 
     ArrayList<String> listItems=new ArrayList<String>();
     ArrayAdapter<String> adapter;
@@ -77,93 +78,7 @@ public class MainMenu extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, MENUITEMS);
         mainListview.setAdapter(adapter);
-        mainListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final String item = (String) mainListview.getItemAtPosition(position);
-                AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
-                b.setTitle("Input Filename");
-                final EditText input = new EditText(MainMenu.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                b.setView(input);
-
-                // Set up the buttons
-                b.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String filename = input.getText().toString();
-                        File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pointclouds");
-                        File file = new File(path,filename+".pcd");
-                        if(!validFileName(filename)||!file.exists()) {
-                            dialog.cancel();
-                            Toast.makeText(MainMenu.this,"File Does Not Exist",Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        if(item.equals("Front")) {
-                            frontFileName = input.getText().toString();
-                            ((TextView) mainListview.getChildAt(FRONT)).setTextColor(Color.GREEN);
-                        } else if (item.equals("Back")){
-                            backFileName = input.getText().toString();
-                            ((TextView) mainListview.getChildAt(FRONT)).setTextColor(Color.GREEN);
-                        } else {
-                            Log.e("MainMenuListViewLClick", "Invalid item selected");
-                            return;
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                b.show();
-                return true;
-            }
-        });
-
-        mainListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String item = (String) mainListview.getItemAtPosition(position);
-                AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
-                b.setTitle("Input Desired Filename");
-                final EditText input = new EditText(MainMenu.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                b.setView(input);
-
-                // Set up the buttons
-                b.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int resultcode;
-                        if(!validFileName(input.getText().toString()))
-                            return;
-                        if(item=="Front") {
-                            resultcode = FRONT;
-                            frontFileName = input.getText().toString();
-                        } else if (item=="Back"){
-                            resultcode = BACK;
-                            backFileName = input.getText().toString();
-                        } else {
-                            Log.e("MainMenuListViewClick", "Invalid item selected");
-                            return;
-                        }
-                        Intent launchCapture = new Intent(getApplicationContext(), PointCloudActivity.class);
-                        launchCapture.putExtra("filename",input.getText().toString());
-                        startActivityForResult(launchCapture,resultcode);
-                    }
-                });
-                b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                b.show();
-            }
-        });
+        setListeners();
     }
 
 
@@ -202,6 +117,29 @@ public class MainMenu extends AppCompatActivity {
                     Toast.makeText(MainMenu.this,"No Internet Connection",Toast.LENGTH_LONG).show();
                     return false;
                 }
+                final AlertDialog.Builder stdDivDialog = new AlertDialog.Builder(MainMenu.this);
+                stdDivDialog.setTitle("Input Standard Deviation");
+                final EditText stdDivEditText = new EditText(MainMenu.this);
+                stdDivEditText.setHint("Recommended Value 2-4");
+                stdDivEditText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL
+                );
+                stdDivDialog.setView(stdDivEditText);
+                stdDivDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!validFileName(stdDivEditText.getText().toString()))
+                            return;
+                        standardDeviation = Float.parseFloat(stdDivEditText.getText().toString());
+                        new SendtoServerTask().execute();
+                    }
+                });
+                stdDivDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
                 AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
                 b.setTitle("Input Desired Filename");
                 final EditText i = new EditText(MainMenu.this);
@@ -213,7 +151,8 @@ public class MainMenu extends AppCompatActivity {
                         if(!validFileName(i.getText().toString()))
                             return;
                         exportFileName = i.getText().toString();
-                        new SendtoServerTask().execute();
+                        dialog.dismiss();
+                        stdDivDialog.show();
                     }
                 });
                 b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -238,6 +177,96 @@ public class MainMenu extends AppCompatActivity {
         return true;
     }
 
+    private void setListeners(){
+        mainListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final String item = (String) mainListview.getItemAtPosition(position);
+                AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
+                b.setTitle("Input Filename");
+                final EditText input = new EditText(MainMenu.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                b.setView(input);
+
+                // Set up the buttons
+                b.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String filename = input.getText().toString();
+                        File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/pointclouds");
+                        File file = new File(path,filename+".pcd");
+                        if(!validFileName(filename)||!file.exists()) {
+                            dialog.cancel();
+                            Toast.makeText(MainMenu.this,"File Does Not Exist",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(item.equals("Front")) {
+                            frontFileName = input.getText().toString();
+                            ((TextView) mainListview.getChildAt(FRONT)).setTextColor(Color.GREEN);
+                        } else if (item.equals("Back")){
+                            backFileName = input.getText().toString();
+                            ((TextView) mainListview.getChildAt(BACK)).setTextColor(Color.GREEN);
+                        } else {
+                            Log.e("MainMenuListViewLClick", "Invalid item selected");
+                            return;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                b.show();
+                return true;
+            }
+        });
+
+        mainListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String item = (String) mainListview.getItemAtPosition(position);
+                AlertDialog.Builder b = new AlertDialog.Builder(MainMenu.this);
+                b.setTitle("Input Desired Filename");
+                final EditText input = new EditText(MainMenu.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                b.setView(input);
+
+                // Set up the buttons
+                b.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int resultcode;
+                        if(!validFileName(input.getText().toString()))
+                            return;
+                        if(item.equals("Front")) {
+                            resultcode = FRONT;
+                            frontFileName = input.getText().toString();
+                        } else if (item.equals("Back")){
+                            resultcode = BACK;
+                            backFileName = input.getText().toString();
+                        } else {
+                            Log.e("MainMenuListViewClick", "Invalid item selected");
+                            return;
+                        }
+                        Intent launchCapture = new Intent(getApplicationContext(), PointCloudActivity.class);
+                        launchCapture.putExtra("filename",input.getText().toString());
+                        startActivityForResult(launchCapture,resultcode);
+                    }
+                });
+                b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                b.show();
+            }
+        });
+    }
+
     private class SendtoServerTask extends AsyncTask<URL,Integer,Boolean> {
         ProgressDialog d;
         @Override
@@ -259,6 +288,7 @@ public class MainMenu extends AppCompatActivity {
             JSONObject data = getJSONObject();
             try{
                 jsonObject.put("main_body",data);
+                Log.d("Debug", String.valueOf(standardDeviation));
             } catch(JSONException e){
                 Log.e("makeRequest","JSON Exception");
                 return false;
@@ -384,6 +414,12 @@ public class MainMenu extends AppCompatActivity {
                 Log.e("getJSONObject","JSON Exception");
             }
         }
+        try {
+            jsonObject.put("std_dev", standardDeviation);
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
         return jsonObject;
     }
 
